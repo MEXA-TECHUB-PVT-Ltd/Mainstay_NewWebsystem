@@ -1,0 +1,9 @@
+.max-width {
+    max-width: 600px;
+}
+
+@media screen and (max-width: 768px) {
+    .grow-custom {
+        flex-wrap: wrap;
+    }
+}

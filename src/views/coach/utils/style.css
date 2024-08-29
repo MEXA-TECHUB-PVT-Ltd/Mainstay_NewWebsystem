@@ -1,0 +1,35 @@
+.custom-select {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border: none;
+    background: transparent;
+    font-weight: 800;
+}
+
+.custom-button {
+    border-radius: 15px;
+    background-color: #C8D0D0;
+    padding: 10px;
+    flex-grow: 1;
+    /* Makes buttons take equal space */
+}
+
+.custom-input-group input,
+.custom-input-group .input-group-text {
+    border-radius: 35px;
+    border: none;
+}
+
+.margin-force-zero {
+    margin: 0px !important;
+}
+
+@media (max-width: 768px) {
+
+    .custom-select,
+    .custom-button,
+    .custom-input-group input,
+    .custom-input-group .input-group-text {
+        font-size: 12px;
+        /* Adjust font size for smaller screens */
+    }
+}

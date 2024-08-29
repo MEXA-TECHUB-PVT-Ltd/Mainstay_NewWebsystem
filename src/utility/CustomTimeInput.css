@@ -1,0 +1,53 @@
+.custom-time-picker-custom {
+    position: relative;
+    display: inline-block;
+    width: 200px;
+}
+
+.time-input-custom {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.dropdown-custom {
+    position: absolute;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 100;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.time-select-custom {
+    display: flex;
+    flex-direction: column;
+    padding: 5px;
+    border-right: 1px solid #eee;
+}
+
+.time-item-custom {
+    padding: 5px 10px;
+    cursor: pointer;
+    text-align: center;
+}
+
+.time-item-custom:hover,
+.time-item-custom.selected {
+    background-color: #007BFF;
+    /* Highlight on hover and when selected */
+    color: white;
+    /* White text for better readability on the highlight */
+}
+
+/* Last column should not have a border on the right */
+.time-select-custom:last-child {
+    border-right: none;
+}
+
+.error-custom{
+    color: red
+}
