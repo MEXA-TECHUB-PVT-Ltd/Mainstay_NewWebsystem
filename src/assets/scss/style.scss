@@ -1,0 +1,42 @@
+/*================================================================================
+	Item Name: Vuexy - Vuejs, HTML & Laravel Admin Dashboard Template
+	Version: 2.0
+	Author: PIXINVENT
+	Author URL: http://www.themeforest.net/user/pixinvent
+================================================================================
+
+NOTE:
+------
+PLACE HERE YOUR OWN SCSS CODES AND IF NEEDED, OVERRIDE THE STYLES FROM THE OTHER STYLESHEETS.
+WE WILL RELEASE FUTURE UPDATES SO IN ORDER TO NOT OVERWRITE YOUR STYLES IT'S BETTER LIKE THIS.  */
+
+.modal-content {
+  border-radius: 20px;
+  width: 80%;
+}
+.modal-header {
+  background: transparent !important;
+  background-color: transparent !important;
+  border: none;
+}
+.react-datepicker {
+  width: 100%;
+  border: none !important;
+}
+
+.react-datepicker__month-container {
+  width: 100%;
+}
+
+.react-datepicker__header {
+  background: transparent !important;
+  border: none !important;
+}
+
+.react-datepicker__day--selected {
+  background-color: #0384fc !important;
+  border-radius: 50% !important;
+}
+.me-2 {
+  margin-right: 3px !important;
+}

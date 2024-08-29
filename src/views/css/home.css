@@ -1,0 +1,25 @@
+.hover-bg:hover {
+    background-color: #f0f0f0 !important;
+}
+
+
+@media (max-width: 768px) {
+    .custom-search-input-group {
+        width: 100% !important;
+        /* Ensure full width on smaller screens */
+    }
+}
+
+/* Adjust padding and margins on smaller screens for better spacing */
+@media (max-width: 576px) {
+    .custom-form-group {
+        /* padding: 2px 5px; */
+        /* Slightly reduce padding */
+    }
+
+    .custom-label,
+    .custom-input {
+        font-size: 14px;
+        /* Adjust font size for better readability */
+    }
+}
