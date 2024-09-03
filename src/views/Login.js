@@ -31,8 +31,14 @@ import {
   Spinner,
   FormGroup,
   ButtonGroup,
+  Dropdown,
+  DropdownToggle,
+  DropdownMenu,
+  DropdownItem,
+  UncontrolledDropdown,
 } from "reactstrap";
 import logo from "@assets/images/logo/logo.png";
+import ReactCountryFlag from "react-country-flag";
 
 // import CryptoJS from "crypto-js";
 
@@ -62,6 +68,7 @@ const Login = () => {
   const [rememberMe, setRememberMe] = useState(false);
   const [initialEmail, setInitialEmail] = useState("");
   const [initialPassword, setInitialPassword] = useState("");
+  const [coordinates, setCoordinates] = useState({});
 
   const source = skin === "dark" ? illustrationsDark : illustrationsLight;
   const navigate = useNavigate();
@@ -88,21 +95,25 @@ const Login = () => {
     dispatch(setLanguage(lng));
   };
 
-  // const getCurrentLocation = () => {
-  //   if (navigator.geolocation) {
-  //     navigator.geolocation.getCurrentPosition(
-  //       (position) => {
-  //         return {
-  //           lat: position.coords.latitude,
-  //           long: position.coords.longitude,
-  //         };
-  //       },
-  //       (error) => {
-  //         console.error("Error retrieving location", error);
-  //       }
-  //     );
-  //   }
-  // };
+  const getCurrentLocation = () => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          setCoordinates({
+            lat: position.coords.latitude,
+            long: position.coords.longitude,
+          });
+        },
+        (error) => {
+          console.error("Error retrieving location", error);
+        }
+      );
+    }
+  };
+
+  useEffect(() => {
+    getCurrentLocation();
+  }, []);
 
   useEffect(() => {
     const rememberedEmail = localStorage.getItem("rememberedEmail");
@@ -219,356 +230,382 @@ const Login = () => {
     }
   };
   return (
-    <div
-      className="auth-wrapper auth-cover"
-      style={{ overflow: "hidden", display: "flex", height: "100vh" }}
-    >
-      <img
-        className="img-fluid"
-        src={"/img/effect.png"}
-        alt="Login Cover"
-        style={{
-          zIndex: "-100",
-          height: "50%",
-          position: "absolute",
-          bottom: "50%",
-          overflow: "hidden",
-        }}
-      />
-      <Link to="/" className="position-absolute top-0 start-0 m-3">
-        <ChevronLeft onClick={() => navigate(-1)} />
-      </Link>
-      <div
-        className="d-flex justify-content-center align-items-center"
-        style={{ flex: 1 }}
-      >
-        <div
-          className="auth-inner w-100 m-0 p-3"
-          style={{ maxWidth: "600px", overflow: "hidden" }}
-        >
-          <Link
-            style={{
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              width: "100%",
-              padding: "0px",
-            }}
+    <>
+      <div className="d-flex w-100 justify-content-end mt-1">
+        <UncontrolledDropdown>
+          <DropdownToggle
+            caret
+            color="primary"
+            className="d-flex align-items-center border border-1 text-dark"
           >
-            <img
-              className="img-fluid"
-              src={logo}
-              alt="Login Cover"
-              style={{ width: "150px", height: "auto", marginTop: "5%" }}
+            <ReactCountryFlag
+              countryCode={lng === "en" ? "US" : "DE"}
+              svg
+              style={{ marginRight: "8px" }}
             />
-          </Link>
-          <div className="d-flex flex-column align-items-center w-100 mt-3">
-            <div
-              className="d-flex flex-column align-items-center justify-content-center auth-bg mt-2"
+            {lng === "en" ? "English" : "German"}
+          </DropdownToggle>
+          <DropdownMenu>
+            <DropdownItem
+              onClick={() => changeLanguage("en")}
+              active={lng === "en"}
+              className="text-center w-100"
+            >
+              English
+            </DropdownItem>
+            <DropdownItem
+              onClick={() => changeLanguage("ge")}
+              active={lng === "ge"}
+              className="text-center w-100"
+            >
+              German
+            </DropdownItem>
+          </DropdownMenu>
+        </UncontrolledDropdown>
+      </div>
+      <div
+        className="auth-wrapper auth-cover"
+        style={{ overflow: "hidden", display: "flex", height: "100vh" }}
+      >
+        <img
+          className="img-fluid"
+          src={"/img/effect.png"}
+          alt="Login Cover"
+          style={{
+            zIndex: "-100",
+            height: "50%",
+            position: "absolute",
+            bottom: "50%",
+            overflow: "hidden",
+          }}
+        />
+
+        <Link to="/" className="position-absolute top-0 start-0 m-3">
+          <ChevronLeft onClick={() => navigate(-1)} />
+        </Link>
+
+        <div
+          className="d-flex justify-content-center align-items-center"
+          style={{ flex: 1 }}
+        >
+          <div
+            className="auth-inner w-100 m-0 p-3"
+            style={{ maxWidth: "600px", overflow: "hidden" }}
+          >
+            <Link
               style={{
-                paddingTop: "55px",
-                borderRadius: "34px",
-                border: "2px solid #f8f8f8",
-                boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
                 width: "100%",
+                padding: "0px",
               }}
             >
-              <div className="d-flex mb-2">
-                <ButtonGroup>
-                  <Button
-                    onClick={() => changeLanguage("en")}
-                    color={`${lng === "en" ? "primary" : "secondary"}`}
-                  >
-                    English
-                  </Button>
-                  <Button
-                    onClick={() => changeLanguage("ge")}
-                    color={`${lng === "ge" ? "primary" : "secondary"}`}
-                  >
-                    German
-                  </Button>
-                </ButtonGroup>
-              </div>
-              <CardTitle tag="h2" className="fw-bold text-center">
-                <p
-                  style={{
-                    fontSize: "25px",
-                    fontFamily: "Montserrat",
-                    color: "#161616",
-                    fontWeight: "bold",
-                  }}
-                >
-                  {t("Sign in to your account")}
-                </p>
-              </CardTitle>
-              <CardText className="text-center">
-                <p
-                  style={{
-                    fontSize: "14px",
-                    fontFamily: "Montserrat",
-                    color: "#7D7D7D",
-                    fontWeight: "600",
-                  }}
-                >
-                  {t("Don’t have an account?")}
-                  <Link to={`/select-user`}> {t("Sign Up")} </Link>
-                </p>
-              </CardText>
-              <Formik
-                initialValues={{
-                  email: initialEmail,
-                  password: initialPassword,
-                }}
-                enableReinitialize
-                validate={(values) => {
-                  const errors = {};
-                  if (!values.email) {
-                    errors.email = t("Email is Required");
-                  } else if (
-                    !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(
-                      values.email
-                    )
-                  ) {
-                    errors.email = t("Invalid email address");
-                  }
-                  if (!values.password) {
-                    errors.password = t("Password is Required");
-                  }
-                  return errors;
-                }}
-                onSubmit={async (values, { setSubmitting }) => {
-                  setLoading(true);
-                  try {
-                    const postData = {
-                      email: values.email,
-                      password: values.password,
-                    };
+              <img
+                className="img-fluid"
+                src={logo}
+                alt="Login Cover"
+                style={{ width: "150px", height: "auto", marginTop: "5%" }}
+              />
+            </Link>
 
-                    const response = await post(`auth/sign-in`, postData);
-
-                    if (!response.success) {
-                      setError(response.message);
-                    } else {
-                      localStorage.setItem(
-                        "loginUserData",
-                        JSON.stringify(response.result)
-                      );
-
-                      if (rememberMe) {
-                        localStorage.setItem("rememberedEmail", values.email);
-                        const passwordEncrypted = cipher(salt)(values.password);
-                        localStorage.setItem(
-                          "rememberedPasswordEncrypted",
-                          passwordEncrypted
-                        );
-                      } else {
-                        localStorage.removeItem("rememberedEmail");
-                        localStorage.removeItem("rememberedPasswordEncrypted");
-                      }
-
-                      const user = response.result.user;
-                      const role = user.role;
-
-                      switch (role) {
-                        case "coach":
-                          if (
-                            register === "true" ||
-                            !user?.coach?.is_completed
-                          ) {
-                            window.location.href = `/profile`;
-                          }
-
-                          if (!user?.coach?.is_stripe_completed) {
-                            if (user.coach.stripe_account_id) {
-                              checkStripeStatus(
-                                user.coach.stripe_account_id,
-                                response.result?.accessToken
-                              );
-                            } else {
-                              setLoading(true);
-                              const accountCreatedResult = await authPost(
-                                "payments/create-account-link",
-                                {},
-                                response.result?.accessToken
-                              );
-                              if (accountCreatedResult?.result?.url) {
-                                window.location.href =
-                                  accountCreatedResult.result.url;
-                              }
-                            }
-                          } else {
-                            window.location.href = "/coach/home";
-                          }
-                          break;
-
-                        case "coachee":
-                          setLoading(false);
-                          window.location = "/coachee/home";
-                          break;
-
-                        default:
-                          setLoading(false);
-                      }
-                    }
-                  } catch (error) {
-                    setLoading(false);
-                  } finally {
-                    setLoading(false);
-                  }
+            <div className="d-flex flex-column align-items-center w-100 mt-3">
+              <div
+                className="d-flex flex-column align-items-center justify-content-center auth-bg mt-2"
+                style={{
+                  paddingTop: "55px",
+                  borderRadius: "34px",
+                  border: "2px solid #f8f8f8",
+                  boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+                  width: "100%",
                 }}
               >
-                {({ isSubmitting }) => (
-                  <Form
-                    className="auth-login-form"
-                    style={{ width: "100%", padding: "0 100px" }}
+                <CardTitle tag="h2" className="fw-bold text-center">
+                  <p
+                    style={{
+                      fontSize: "25px",
+                      fontFamily: "Montserrat",
+                      color: "#161616",
+                      fontWeight: "bold",
+                    }}
                   >
-                    <div className="mb-2">
-                      <InputGroup>
-                        <InputGroupText
-                          style={{
-                            borderBottomLeftRadius: "25%",
-                            borderTopLeftRadius: "25%",
-                            borderRight: "none",
-                            backgroundColor: "#EEEEEE",
-                          }}
-                        >
-                          <Mail size={14} />
-                        </InputGroupText>
-                        <Field
-                          style={{
-                            paddingLeft: "0px",
-                            borderLeft: "none",
-                            borderRight: "none",
-                            backgroundColor: "#EEEEEE",
-                          }}
-                          name="email"
-                          id="login-email"
-                          placeholder="john@example.com"
-                          as={Input}
-                          type="email"
-                        />
-                        <InputGroupText
-                          style={{
-                            borderBottomRightRadius: "25%",
-                            borderTopRightRadius: "25%",
-                            borderLeft: "none",
-                            backgroundColor: "#EEEEEE",
-                          }}
-                        ></InputGroupText>
-                      </InputGroup>
-                      <ErrorMessage name="email">
-                        {(msg) => (
-                          <div className="error" style={{ color: "red" }}>
-                            {msg}
-                          </div>
-                        )}
-                      </ErrorMessage>
-                    </div>
-                    <div className="mb-2">
-                      <InputGroup>
-                        <InputGroupText
-                          style={{
-                            borderBottomLeftRadius: "25%",
-                            borderTopLeftRadius: "25%",
-                            borderRight: "none",
-                            backgroundColor: "#EEEEEE",
-                          }}
-                        >
-                          <Lock size={14} />
-                        </InputGroupText>
-                        <Field
-                          as={Input}
-                          style={{
-                            paddingLeft: "0px",
-                            paddingRight: "0px",
-                            borderLeft: "none",
-                            borderRight: "none",
-                            backgroundColor: "#EEEEEE",
-                          }}
-                          type={showPassword ? "text" : "password"}
-                          autoComplete="off"
-                          name="password"
-                          id="login-password"
-                          placeholder="Password"
-                          className="input-group-merge"
-                        />
-                        <InputGroupText
-                          onClick={togglePasswordVisibility}
-                          style={{
-                            borderBottomRightRadius: "25%",
-                            borderTopRightRadius: "25%",
-                            cursor: "pointer",
-                            borderLeft: "none",
-                            backgroundColor: "#EEEEEE",
-                          }}
-                        >
-                          {showPassword ? (
-                            <Eye size={16} />
-                          ) : (
-                            <EyeOff size={16} />
+                    {t("Sign in to your account")}
+                  </p>
+                </CardTitle>
+                <CardText className="text-center">
+                  <p
+                    style={{
+                      fontSize: "14px",
+                      fontFamily: "Montserrat",
+                      color: "#7D7D7D",
+                      fontWeight: "600",
+                    }}
+                  >
+                    {t("Don’t have an account?")}
+                    <Link to={`/select-user`}> {t("Sign Up")} </Link>
+                  </p>
+                </CardText>
+                <Formik
+                  initialValues={{
+                    email: initialEmail,
+                    password: initialPassword,
+                  }}
+                  enableReinitialize
+                  validate={(values) => {
+                    const errors = {};
+                    if (!values.email) {
+                      errors.email = t("Email is Required");
+                    } else if (
+                      !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(
+                        values.email
+                      )
+                    ) {
+                      errors.email = t("Invalid email address");
+                    }
+                    if (!values.password) {
+                      errors.password = t("Password is Required");
+                    }
+                    return errors;
+                  }}
+                  onSubmit={async (values, { setSubmitting }) => {
+                    setLoading(true);
+                    try {
+                      const postData = {
+                        email: values.email,
+                        password: values.password,
+                        lat: coordinates?.lat,
+                        long: coordinates.long,
+                      };
+
+                      const response = await post(`auth/sign-in`, postData);
+
+                      if (!response.success) {
+                        setError(response.message);
+                      } else {
+                        localStorage.setItem(
+                          "loginUserData",
+                          JSON.stringify(response.result)
+                        );
+
+                        if (rememberMe) {
+                          localStorage.setItem("rememberedEmail", values.email);
+                          const passwordEncrypted = cipher(salt)(
+                            values.password
+                          );
+                          localStorage.setItem(
+                            "rememberedPasswordEncrypted",
+                            passwordEncrypted
+                          );
+                        } else {
+                          localStorage.removeItem("rememberedEmail");
+                          localStorage.removeItem(
+                            "rememberedPasswordEncrypted"
+                          );
+                        }
+
+                        const user = response.result.user;
+                        const role = user.role;
+
+                        switch (role) {
+                          case "coach":
+                            if (
+                              register === "true" ||
+                              !user?.coach?.is_completed
+                            ) {
+                              window.location.href = `/profile`;
+                            }
+
+                            if (!user?.coach?.is_stripe_completed) {
+                              if (user.coach.stripe_account_id) {
+                                checkStripeStatus(
+                                  user.coach.stripe_account_id,
+                                  response.result?.accessToken
+                                );
+                              } else {
+                                setLoading(true);
+                                const accountCreatedResult = await authPost(
+                                  "payments/create-account-link",
+                                  {},
+                                  response.result?.accessToken
+                                );
+                                if (accountCreatedResult?.result?.url) {
+                                  window.location.href =
+                                    accountCreatedResult.result.url;
+                                }
+                              }
+                            } else {
+                              window.location.href = "/coach/home";
+                            }
+                            break;
+
+                          case "coachee":
+                            setLoading(false);
+                            window.location = "/coachee/home";
+                            break;
+
+                          default:
+                            setLoading(false);
+                        }
+                      }
+                    } catch (error) {
+                      setLoading(false);
+                    } finally {
+                      setLoading(false);
+                    }
+                  }}
+                >
+                  {({ isSubmitting }) => (
+                    <Form
+                      className="auth-login-form"
+                      style={{ width: "100%", padding: "0 100px" }}
+                    >
+                      <div className="mb-2">
+                        <InputGroup>
+                          <InputGroupText
+                            style={{
+                              borderBottomLeftRadius: "25%",
+                              borderTopLeftRadius: "25%",
+                              borderRight: "none",
+                              backgroundColor: "#EEEEEE",
+                            }}
+                          >
+                            <Mail size={14} />
+                          </InputGroupText>
+                          <Field
+                            style={{
+                              paddingLeft: "0px",
+                              borderLeft: "none",
+                              borderRight: "none",
+                              backgroundColor: "#EEEEEE",
+                            }}
+                            name="email"
+                            id="login-email"
+                            placeholder="john@example.com"
+                            as={Input}
+                            type="email"
+                          />
+                          <InputGroupText
+                            style={{
+                              borderBottomRightRadius: "25%",
+                              borderTopRightRadius: "25%",
+                              borderLeft: "none",
+                              backgroundColor: "#EEEEEE",
+                            }}
+                          ></InputGroupText>
+                        </InputGroup>
+                        <ErrorMessage name="email">
+                          {(msg) => (
+                            <div className="error" style={{ color: "red" }}>
+                              {msg}
+                            </div>
                           )}
-                        </InputGroupText>
-                      </InputGroup>
-                      <ErrorMessage name="password">
-                        {(msg) => (
-                          <div className="error" style={{ color: "red" }}>
-                            {msg}
-                          </div>
+                        </ErrorMessage>
+                      </div>
+                      <div className="mb-2">
+                        <InputGroup>
+                          <InputGroupText
+                            style={{
+                              borderBottomLeftRadius: "25%",
+                              borderTopLeftRadius: "25%",
+                              borderRight: "none",
+                              backgroundColor: "#EEEEEE",
+                            }}
+                          >
+                            <Lock size={14} />
+                          </InputGroupText>
+                          <Field
+                            as={Input}
+                            style={{
+                              paddingLeft: "0px",
+                              paddingRight: "0px",
+                              borderLeft: "none",
+                              borderRight: "none",
+                              backgroundColor: "#EEEEEE",
+                            }}
+                            type={showPassword ? "text" : "password"}
+                            autoComplete="off"
+                            name="password"
+                            id="login-password"
+                            placeholder="Password"
+                            className="input-group-merge"
+                          />
+                          <InputGroupText
+                            onClick={togglePasswordVisibility}
+                            style={{
+                              borderBottomRightRadius: "25%",
+                              borderTopRightRadius: "25%",
+                              cursor: "pointer",
+                              borderLeft: "none",
+                              backgroundColor: "#EEEEEE",
+                            }}
+                          >
+                            {showPassword ? (
+                              <Eye size={16} />
+                            ) : (
+                              <EyeOff size={16} />
+                            )}
+                          </InputGroupText>
+                        </InputGroup>
+                        <ErrorMessage name="password">
+                          {(msg) => (
+                            <div className="error" style={{ color: "red" }}>
+                              {msg}
+                            </div>
+                          )}
+                        </ErrorMessage>
+                      </div>
+                      <FormGroup
+                        check
+                        className="mb-1 ms-0 ml-0"
+                        style={{ textAlign: "right" }}
+                      >
+                        <Label check>
+                          <Field
+                            type="checkbox"
+                            name="rememberMe"
+                            checked={rememberMe}
+                            onChange={handleRememberMeChange}
+                          />{" "}
+                          {t("Remember Me")}
+                        </Label>
+                      </FormGroup>
+                      <div className="error" style={{ color: "red" }}>
+                        {error}
+                      </div>
+                      <Button
+                        color="primary"
+                        type="submit"
+                        disabled={isSubmitting}
+                        block
+                        className="w-50"
+                        style={{
+                          borderRadius: "50px",
+                          boxShadow: "none",
+                          marginTop: "14%",
+                        }}
+                      >
+                        {loading ? (
+                          <Spinner size="sm">Loading...</Spinner>
+                        ) : (
+                          t("Sign in")
                         )}
-                      </ErrorMessage>
-                    </div>
-                    <FormGroup
-                      check
-                      className="mb-1 ms-0 ml-0"
-                      style={{ textAlign: "right" }}
-                    >
-                      <Label check>
-                        <Field
-                          type="checkbox"
-                          name="rememberMe"
-                          checked={rememberMe}
-                          onChange={handleRememberMeChange}
-                        />{" "}
-                        {t("Remember Me")}
-                      </Label>
-                    </FormGroup>
-                    <div className="error" style={{ color: "red" }}>
-                      {error}
-                    </div>
-                    <Button
-                      color="primary"
-                      type="submit"
-                      disabled={isSubmitting}
-                      block
-                      className="w-50"
-                      style={{
-                        borderRadius: "50px",
-                        boxShadow: "none",
-                        marginTop: "14%",
-                      }}
-                    >
-                      {loading ? (
-                        <Spinner size="sm">Loading...</Spinner>
-                      ) : (
-                        t("Sign in")
-                      )}
-                    </Button>
-                  </Form>
-                )}
-              </Formik>
-              <div className="divider my-2">
-                <Link to={`/forgot-password`}>
-                  <small style={{ fontWeight: "600" }}>
-                    {" "}
-                    {t("Forget Password?")}{" "}
-                  </small>
-                </Link>
+                      </Button>
+                    </Form>
+                  )}
+                </Formik>
+                <div className="divider my-2">
+                  <Link to={`/forgot-password`}>
+                    <small style={{ fontWeight: "600" }}>
+                      {" "}
+                      {t("Forget Password?")}{" "}
+                    </small>
+                  </Link>
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-      {/* <div
+        {/* <div
         className="d-none d-lg-flex align-items-center justify-content-center"
         style={{ flex: 1 }}
       >
@@ -584,7 +621,8 @@ const Login = () => {
           }}
         />
       </div> */}
-    </div>
+      </div>
+    </>
   );
 };
 
