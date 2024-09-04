@@ -78,6 +78,7 @@ const Register = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [userState, setUserState] = useState();
+  const [coordinates, setCoordinates] = useState({});
 
   const queryParams = new URLSearchParams(location.search);
   const user = queryParams.get("user");
@@ -87,6 +88,26 @@ const Register = () => {
   const toggleModal = () => {
     setModalOpen(!modalOpen);
   };
+
+  const getCurrentLocation = () => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          setCoordinates({
+            lat: position.coords.latitude,
+            long: position.coords.longitude,
+          });
+        },
+        (error) => {
+          console.error("Error retrieving location", error);
+        }
+      );
+    }
+  };
+
+  useEffect(() => {
+    getCurrentLocation();
+  }, []);
 
   useEffect(() => {
     console.log("Inside useEffect");
@@ -236,6 +257,8 @@ const Register = () => {
                         password: values.password,
                         role: user,
                         device_id: "currentToken",
+                        lat: coordinates?.lat,
+                        long: coordinates.long,
                       };
 
                       const apiData = await post(`auth/register`, postData);
