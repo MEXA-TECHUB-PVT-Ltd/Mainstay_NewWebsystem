@@ -466,13 +466,13 @@ const CoachDetail = () => {
           <Col
             sm="12"
             md="12"
-            lg="5"
+            lg="6"
             style={{
               paddingTop: "30px",
               borderRadius: "20px",
-              marginRight: "100px",
-              // border: "2px solid #f8f8f8",
-              // boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+              marginRight: "8px",
+              border: "2px solid #f8f8f8",
+              boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
             }}
           >
             {" "}
@@ -527,7 +527,7 @@ const CoachDetail = () => {
                     style={{
                       fontSize: "19px",
                       color: "#0F6D6A",
-                      fontWeight: "600",
+                      fontWeight: "500",
                       textTransform: "capitalize",
                     }}
                   >
@@ -556,10 +556,10 @@ const CoachDetail = () => {
                                 : "#FF463A",
                           }}
                         >
-                          {
+                          {t(
                             sessionData?.session?.session_data?.session_details
                               ?.status
-                          }
+                          )}
                         </span>
                       )}
                   </h2>
@@ -771,7 +771,7 @@ const CoachDetail = () => {
               <h3
                 className="pt-2"
                 style={{
-                  fontWeight: "600",
+                  fontWeight: "500",
                   marginBottom: "20px",
                   color: "#0f6d6a",
                 }}
@@ -795,7 +795,7 @@ const CoachDetail = () => {
           <Col
             sm="12"
             md="12"
-            lg="6"
+            lg="5"
             style={{
               overflow: "hidden",
               paddingTop: "30px",
@@ -805,25 +805,19 @@ const CoachDetail = () => {
               boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
             }}
           >
-            <h2 className="text-primary" style={{ fontWeight: "600" }}>
+            <h2 className="text-primary" style={{ fontWeight: "500" }}>
               {t("Book Session")}
             </h2>
             <h2
               className="text-primary"
-              style={{ fontSize: "20px", fontWeight: "600" }}
+              style={{ fontSize: "18px", fontWeight: "500" }}
             >
               {t("Select Category")}
             </h2>
 
             <Row>
               {availability?.coaching_area_list?.map((item, index) => (
-                <Col
-                  key={index}
-                  sm="12"
-                  md="12"
-                  lg="12"
-                  style={{ marginBottom: "10px", marginLeft: "2px" }}
-                >
+                <Col key={index} style={{ marginBottom: "10px" }}>
                   {" "}
                   <Badge
                     disabled
@@ -846,16 +840,17 @@ const CoachDetail = () => {
                       fontSize: "12px",
                       fontWeight: "500",
                       cursor: "pointer",
+                      marginRight: "0px !important",
                     }}
                   >
                     <img
                       src={item?.icon}
                       alt="Icon"
-                      className="me-2"
+                      className="me-1"
                       style={{
                         width: "24px",
                         height: "24px",
-                        marginRight: "0px !impotent",
+                        marginRight: "0px !important",
                         // margin: "0 20px",
                       }}
                     />
@@ -870,11 +865,16 @@ const CoachDetail = () => {
             <div style={{ marginTop: "20px" }}>
               <h2
                 className="text-primary"
-                style={{ fontSize: "20px", fontWeight: "600" }}
+                style={{ fontSize: "18px", fontWeight: "500" }}
               >
                 {t("Booking Availability")}
               </h2>
-              <div style={{ width: "100%", textAlignLast: "center" }}>
+              <div
+                style={{
+                  width: "100%",
+                  textAlignLast: "center",
+                }}
+              >
                 <ReactDatePicker
                   selected={selectedDate}
                   onChange={(date) => {
@@ -884,7 +884,7 @@ const CoachDetail = () => {
                   }}
                   inline
                   filterDate={isDateDisabled}
-                  className="form-control form-control-solid w-250px"
+                  className="form-control w-100"
                 />
               </div>
             </div>
@@ -892,8 +892,8 @@ const CoachDetail = () => {
               <h2
                 className="text-primary"
                 style={{
-                  fontSize: "24px",
-                  fontWeight: "600",
+                  fontSize: "18px",
+                  fontWeight: "500",
                   paddingTop: "10px",
                 }}
               >
@@ -966,7 +966,7 @@ const CoachDetail = () => {
         >
           <ModalHeader toggle={toggleDurationModal}>
             {" "}
-            <p style={{ fontWeight: "Bold", fontSize: "20px" }}>
+            <p style={{ fontWeight: "Bold", fontSize: "18px" }}>
               {t("Choose Duration")}
             </p>
           </ModalHeader>
@@ -1049,7 +1049,7 @@ const CoachDetail = () => {
             {" "}
             <p
               style={{
-                fontWeight: "600",
+                fontWeight: "500",
                 fontSize: "18px",
                 marginTop: "15px",
                 color: "#0F6D6A",
@@ -1113,7 +1113,7 @@ const CoachDetail = () => {
                   </h2>
                   <h2 className="d-flex">
                     <img src={filledStar} alt="" width={30} height={30} />
-                    <p style={{ fontSize: "20px", padding: "2px" }}>
+                    <p style={{ fontSize: "18px", padding: "2px" }}>
                       {avgRating && avgRating !== "NaN"
                         ? parseFloat(avgRating).toFixed(1)
                         : 0}

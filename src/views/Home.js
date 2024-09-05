@@ -43,7 +43,7 @@ const Home = () => {
   const [sort, setSort] = useState("created_at_desc");
   const [loading, setLoading] = useState(false);
   const {
-    data: coachesData,
+    currentData: coachesData,
     isLoading: isLoadingCoaches,
     isError: isErrorCoaches,
   } = useGetAllCoachQuery(

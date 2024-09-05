@@ -4,7 +4,7 @@ import { createRoot } from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
 
 // ** Redux Imports
-import { store } from "./redux/store";
+import { persistor, store } from "./redux/store";
 import { Provider } from "react-redux";
 
 // ** ThemeColors Context
@@ -55,32 +55,37 @@ import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
 
 import geTranslation from "./locales/ge.json";
-
-// initialization
-i18n.use(initReactI18next).init({
-  resources: {
-    ge: { translation: geTranslation },
-  },
-  lng: "ge",
-  fallback: "en",
-  interpolation: { escapeValue: false },
-});
+import { PersistGate } from "redux-persist/integration/react";
 
 const container = document.getElementById("root");
 const root = createRoot(container);
 
+{
+  // initialization
+  i18n.use(initReactI18next).init({
+    resources: {
+      ge: { translation: geTranslation },
+    },
+    lng: "ge",
+    fallback: "en",
+    interpolation: { escapeValue: false },
+  });
+}
+
 root.render(
   <BrowserRouter>
     <Provider store={store}>
-      <Suspense fallback={<Spinner />}>
-        <ThemeColors.Provider>
-          <LazyApp />
-          <Toaster
-            position={themeConfig.layout.toastPosition}
-            toastOptions={{ className: "react-hot-toast" }}
-          />
-        </ThemeColors.Provider>
-      </Suspense>
+      <PersistGate loading={null} persistor={persistor}>
+        <Suspense fallback={<Spinner />}>
+          <ThemeColors.Provider>
+            <LazyApp />
+            <Toaster
+              position={themeConfig.layout.toastPosition}
+              toastOptions={{ className: "react-hot-toast" }}
+            />
+          </ThemeColors.Provider>
+        </Suspense>
+      </PersistGate>
     </Provider>
   </BrowserRouter>
 );

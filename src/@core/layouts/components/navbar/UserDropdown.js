@@ -193,13 +193,6 @@ const UserDropdown = () => {
           className="nav-link dropdown-user-link"
           onClick={(e) => e.preventDefault()}
         >
-          <div className="user-nav d-sm-flex d-none">
-            <span className="user-name fw-bold">
-              {user ? user?.first_name + " " + user?.last_name : "N/A"}
-            </span>
-            {/* <span className="user-status">Admin</span> */}
-          </div>
-
           <div style={{ position: "relative", display: "inline-block" }}>
             <Avatar
               img={user?.profile_pic || defaultAvatar}
@@ -222,6 +215,12 @@ const UserDropdown = () => {
                 }}
               />
             )}
+          </div>
+          <div className="user-nav d-sm-flex d-none">
+            <span className="user-name fw-bold">
+              {user ? user?.first_name : "N/A"}
+            </span>
+            {/* <span className="user-status">Admin</span> */}
           </div>
         </DropdownToggle>
         <DropdownMenu end>

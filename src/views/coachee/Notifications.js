@@ -11,8 +11,10 @@ import wellcoins from "@assets/images/avatars/wellcoins.png";
 import "./Scrollbar.css";
 import { BASE_URL } from "../../urls/api";
 import "react-toastify/dist/ReactToastify.css";
+import { useTranslation } from "react-i18next";
 
 const Notifications = () => {
+  const { t } = useTranslation();
   const { id } = useParams();
   const navigate = useNavigate();
   const [userdetails, setUserdetails] = useState("");
@@ -167,35 +169,35 @@ const Notifications = () => {
         case "SESSION_REQUEST":
           return (
             <span>
-              You have a session request from{" "}
+              {t("You have a session request from")}
               <span style={nameStyle}>{item.coachee_full_name}</span>.
             </span>
           );
         case "SESSION_REVIEW":
           return (
             <span>
-              New review received from{" "}
-              <span style={nameStyle}>{item.coachee_full_name}</span>. Check it
-              out now!
+              {t(" New review received from")}
+              <span style={nameStyle}>{item.coachee_full_name}</span>.{" "}
+              {t("Check it out now!")}
             </span>
           );
         case "SESSION_STARTED":
           return (
             <span>
-              Your session with{" "}
-              <span style={nameStyle}>{item.coachee_full_name}</span> is about
-              to start.
+              {t("Your session with")}
+              <span style={nameStyle}>{item.coachee_full_name}</span>{" "}
+              {t("is about to start")}
             </span>
           );
         case "PAYMENT_SUCCESSFUL":
           return (
             <span>
-              Payment received for session with{" "}
+              {t("Payment received for session with")}
               <span style={nameStyle}>{item.coachee_full_name}</span>.
             </span>
           );
         case "NEW_BADGE":
-          return "Congratulations! You have received new badges.";
+          return t("Congratulations! You have received new badges.");
         default:
           return item.content;
       }
@@ -204,42 +206,43 @@ const Notifications = () => {
         case "SESSION_REQUEST":
           return (
             <span>
-              Your session request has been sent to{" "}
+              {t("Your session request has been sent to")}
               <span style={nameStyle}>{item.coach_full_name}</span>.
             </span>
           );
         case "SESSION_ENDED":
           return (
             <span>
-              Kindly rate your session with{" "}
+              {t("Kindly rate your session with")}
               <span style={nameStyle}>{item.coach_full_name}</span>.
             </span>
           );
         case "SESSION_STARTED":
           return (
             <span>
-              Your session with{" "}
-              <span style={nameStyle}>{item.coach_full_name}</span> has started.
+              {t("Your session with")}
+              <span style={nameStyle}>{item.coach_full_name}</span>{" "}
+              {t("has started.")}
             </span>
           );
         case "PAYMENT_SUCCESSFUL":
           return (
             <span>
-              You have successfully paid for the session with{" "}
+              {t("You have successfully paid for the session with")}
               <span style={nameStyle}>{item.coach_full_name}</span>.
             </span>
           );
         case "SESSION_ACCEPTED":
           return (
             <span>
-              Your session has been accepted by{" "}
+              {t("Your session has been accepted by")}
               <span style={nameStyle}>{item.coach_full_name}</span>.
             </span>
           );
         case "NEW_BADGE":
-          return "Congratulations! You received new badges. Keep going.";
+          return t("Congratulations! You received new badges. Keep going.");
         case "WELL_COINS_RECEIVED":
-          return "Congratulations! You received new wellcoins.";
+          return t("Congratulations! You received new wellcoins.");
         default:
           return item.content;
       }

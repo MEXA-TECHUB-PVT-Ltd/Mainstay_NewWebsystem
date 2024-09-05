@@ -62,13 +62,17 @@ const SessionResponseModalDetails = ({
                   }}
                 >
                   <Avatar
-                    style={{ height: "40px", marginLeft: "10px" }}
+                    style={{
+                      height: "60px",
+                      width: "60px",
+                      marginLeft: "10px",
+                    }}
                     className="ml-2"
                     img={
                       data?.session_info?.coachee_profile_pic || defaultAvatar
                     }
-                    imgHeight="50"
-                    imgWidth="50"
+                    imgHeight="60"
+                    imgWidth="60"
                     // status="online"
                   />
                   {data?.session_info?.coachee_badge && (
@@ -102,11 +106,11 @@ const SessionResponseModalDetails = ({
                   </h2>
 
                   <div className="d-flex flex-wrap">
-                    <p style={{ fontSize: "16px", padding: "2px" }}>
+                    <p style={{ fontSize: "12px" }}>
                       <div
                         style={{
                           marginLeft: "10px",
-                          padding: "5px",
+                          padding: "3px",
                           color: "#fff",
                           textTransform: "capitalize",
                           borderRadius: "7px",
@@ -123,7 +127,7 @@ const SessionResponseModalDetails = ({
                               : "#FF463A",
                         }}
                       >
-                        {data?.session_info?.session_details?.status}
+                        {t(data?.session_info?.session_details?.status)}
                       </div>
                     </p>
                   </div>

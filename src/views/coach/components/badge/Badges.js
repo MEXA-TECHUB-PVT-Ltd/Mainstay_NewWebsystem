@@ -21,7 +21,7 @@ const Badges = ({ userBadge }) => {
 
   return (
     <Card
-      className="flex-grow-1 text-center p-4 height-control"
+      className="flex-grow-1 text-center p-2 height-control"
       style={{ maxWidth: "450px", cursor: "pointer" }}
     >
       <h1 style={{ color: "#0F6D6A" }}> {t("My Mainstays Badges")} </h1>
@@ -39,10 +39,16 @@ const Badges = ({ userBadge }) => {
                   : inactiveBadge
               }
               alt={badge.title + " Badge"}
-              width="80"
+              width="70"
             />
-            <h2>{badge?.title}</h2>
-            <p>{badge?.criteria}</p>
+            <h3>{badge?.title}</h3>
+            <p
+              style={{
+                fontSize: "12px",
+              }}
+            >
+              {badge?.criteria}
+            </p>
           </div>
         ))}
       </div>
