@@ -9,6 +9,8 @@ import "react-toastify/dist/ReactToastify.css"; // Ensure CSS is imported
 import { BASE_URL, SOCKET_URL, authGet } from "./urls/api";
 import { io } from "socket.io-client";
 import { useTranslation } from "react-i18next";
+import { useSelector } from "react-redux";
+import i18next from "i18next";
 
 const socket = io(SOCKET_URL, {
   autoConnect: false,
@@ -19,6 +21,11 @@ const App = () => {
   const user = JSON.parse(localStorage.getItem("loginUserData")) || undefined;
   const role = user?.user ? user?.user?.role : user?.role;
   const userId = user?.user ? user?.user?.id : user?.id;
+  const { lng } = useSelector((state) => state.languageSlice);
+
+  useEffect(() => {
+    i18next.changeLanguage(lng);
+  }, [lng]);
 
   useEffect(() => {
     if (userId) {

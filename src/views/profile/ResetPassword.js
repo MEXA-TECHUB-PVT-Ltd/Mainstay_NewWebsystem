@@ -32,6 +32,10 @@ import {
   InputGroup,
   InputGroupText,
   Spinner,
+  UncontrolledDropdown,
+  DropdownToggle,
+  DropdownMenu,
+  DropdownItem,
 } from "reactstrap";
 import logo from "@assets/images/logo/logo.png";
 
@@ -45,6 +49,10 @@ import { useEffect, useState } from "react";
 import { post } from "../../urls/api";
 import { ToastContainer, toast } from "react-toastify";
 import { useTranslation } from "react-i18next";
+import ReactCountryFlag from "react-country-flag";
+import i18next from "i18next";
+import { setLanguage } from "../../redux/languageSlice";
+import { useDispatch, useSelector } from "react-redux";
 // import { post, put } from '../urls/api';
 
 const ResetPassword = () => {
@@ -56,6 +64,8 @@ const ResetPassword = () => {
   const searchParams = new URLSearchParams(search);
   const email = searchParams.get("email");
   const role = searchParams.get("role");
+  const dispatch = useDispatch();
+  const { lng } = useSelector((state) => state.languageSlice);
 
   const { skin } = useSkin();
   const [error, setError] = useState("");
@@ -68,275 +78,318 @@ const ResetPassword = () => {
     navigate(`/login?user=${role}`);
   };
   const source = skin === "dark" ? illustrationsDark : illustrationsLight;
+  const changeLanguage = (lng) => {
+    i18next.changeLanguage(lng);
+    dispatch(setLanguage(lng));
+  };
+
   return (
-    <div
-      className="auth-wrapper auth-cover"
-      style={{ display: "flex", height: "100vh", overflow: "hidden" }}
-    >
-      <img
-        className="img-fluid"
-        src={"/img/effect.png"}
-        alt="Login Cover"
-        style={{
-          zIndex: "-100",
-          height: "50%",
-          position: "absolute",
-          bottom: "50%",
-          overflow: "hidden",
-        }}
-      />
-      <Link to="/" className="position-absolute top-0 start-0 m-3">
-        <ChevronLeft onClick={() => navigate(-1)} />
-      </Link>
-      <div
-        className="d-lg-flex align-items-center justify-content-center"
-        style={{ flex: 1 }}
-      >
-        <div
-          className="d-flex flex-column align-items-center w-100 m-0 p-3"
-          style={{ maxWidth: "600px", overflow: "hidden" }}
-        >
-          <Link
-            style={{
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              width: "100%",
-              padding: "0px",
-            }}
+    <>
+      <div className="d-flex w-100 justify-content-end mt-1">
+        <UncontrolledDropdown>
+          <DropdownToggle
+            caret
+            color="primary"
+            className="d-flex align-items-center border border-1 text-dark"
           >
-            <img
-              className="img-fluid"
-              src={logo}
-              alt="Login Cover"
-              style={{ width: "150px", height: "auto", marginTop: "5%" }}
+            <ReactCountryFlag
+              countryCode={lng === "en" ? "US" : "DE"}
+              svg
+              style={{ marginRight: "8px" }}
             />
-          </Link>
-          <div className="d-flex flex-column align-items-center w-100 mt-3">
-            <div
-              className="d-flex flex-column align-items-center justify-content-center auth-bg mt-2"
+            {lng === "en" ? "English" : "German"}
+          </DropdownToggle>
+          <DropdownMenu>
+            <DropdownItem
+              onClick={() => changeLanguage("en")}
+              active={lng === "en"}
+              className="text-center w-100"
+            >
+              English
+            </DropdownItem>
+            <DropdownItem
+              onClick={() => changeLanguage("ge")}
+              active={lng === "ge"}
+              className="text-center w-100"
+            >
+              German
+            </DropdownItem>
+          </DropdownMenu>
+        </UncontrolledDropdown>
+      </div>
+      <div
+        className="auth-wrapper auth-cover"
+        style={{ display: "flex", height: "100vh", overflow: "hidden" }}
+      >
+        <img
+          className="img-fluid"
+          src={"/img/effect.png"}
+          alt="Login Cover"
+          style={{
+            zIndex: "-100",
+            height: "50%",
+            position: "absolute",
+            bottom: "50%",
+            overflow: "hidden",
+          }}
+        />
+        <Link to="/" className="position-absolute top-0 start-0 m-3">
+          <ChevronLeft onClick={() => navigate(-1)} />
+        </Link>
+        <div
+          className="d-lg-flex align-items-center justify-content-center"
+          style={{ flex: 1 }}
+        >
+          <div
+            className="d-flex flex-column align-items-center w-100 m-0 p-3"
+            style={{ maxWidth: "600px", overflow: "hidden" }}
+          >
+            <Link
               style={{
-                paddingTop: "55px",
-                borderRadius: "34px",
-                border: "2px solid #f8f8f8",
-                boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
                 width: "100%",
-                maxWidth: "400px",
+                padding: "0px",
               }}
             >
-              <CardTitle tag="h2" className="fw-bold text-center">
-                <p
-                  style={{
-                    fontSize: "25px",
-                    fontFamily: "Montserrat",
-                    color: "#161616",
-                    fontWeight: "bold",
-                  }}
-                >
-                  {t("Reset Password")}
-                </p>
-              </CardTitle>
-              <CardText className="text-center">
-                <p
-                  style={{
-                    fontSize: "14px",
-                    fontFamily: "Montserrat",
-                    color: "#7D7D7D",
-                    fontWeight: "600",
-                  }}
-                >
-                  {t("Create a strong password")}
-                </p>
-              </CardText>
-              <Formik
-                initialValues={{ password: "", confirmPassword: "" }}
-                validate={(values) => {
-                  const passwordRegex =
-                    /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&]).{8,}$/;
-                  const errors = {};
-                  if (!values.password) {
-                    errors.password = t("Password is required");
-                  } else if (!passwordRegex.test(values.password)) {
-                    errors.password =
-                      "Password must contain at least 8 characters, one uppercase letter, one lowercase letter, one number, and one special character";
-                  }
-                  if (!values.confirmPassword) {
-                    errors.confirmPassword = t("Confirm Password is required");
-                  } else if (values.password !== values.confirmPassword) {
-                    errors.confirmPassword = t("Passwords do not match");
-                  }
-                  return errors;
-                }}
-                onSubmit={async (values, { setSubmitting }) => {
-                  try {
-                    const postData = {
-                      email,
-                      password: values.password,
-                    };
-                    const apiData = await post(
-                      "auth/reset-password/",
-                      postData
-                    );
-                    if (!apiData.success) {
-                      setError(apiData.message);
-                      setSubmitting(false);
-                    } else {
-                      setSubmitting(false);
-                      notification(t("Password reset successfully"), "success");
-                    }
-                  } catch (error) {
-                    setSubmitting(false);
-                  }
+              <img
+                className="img-fluid"
+                src={logo}
+                alt="Login Cover"
+                style={{ width: "150px", height: "auto", marginTop: "5%" }}
+              />
+            </Link>
+            <div className="d-flex flex-column align-items-center w-100 mt-3">
+              <div
+                className="d-flex flex-column align-items-center justify-content-center auth-bg mt-2"
+                style={{
+                  paddingTop: "55px",
+                  borderRadius: "34px",
+                  border: "2px solid #f8f8f8",
+                  boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+                  width: "100%",
+                  maxWidth: "400px",
                 }}
               >
-                {({ isSubmitting }) => (
-                  <>
-                    <Link
-                      className="brand-logo"
-                      to="/"
-                      onClick={(e) => e.preventDefault()}
-                    ></Link>
-                    <Form
-                      className="auth-login-form mt-0"
-                      style={{ width: "100%", padding: "0 50px" }}
-                    >
-                      <div className="mb-2">
-                        <InputGroup>
-                          <InputGroupText
-                            style={{
-                              borderRight: "none",
-                              backgroundColor: "#EEEEEE",
-                              borderBottomLeftRadius: "25%",
-                              borderTopLeftRadius: "25%",
-                            }}
-                          >
-                            <Lock size={14} />
-                          </InputGroupText>
-                          <Field
-                            name="password"
-                            as={Input}
-                            autoComplete="off"
-                            className="input-group-merge"
-                            id="login-password"
-                            placeholder="Password"
-                            type={showPassword ? "text" : "password"}
-                            style={{
-                              paddingLeft: "0px",
-                              paddingRight: "0px",
-                              borderLeft: "none",
-                              borderRight: "none",
-                              backgroundColor: "#EEEEEE",
-                            }}
-                          />
-                          <InputGroupText
-                            onClick={() => setShowPassword(!showPassword)}
-                            style={{
-                              borderBottomRightRadius: "25%",
-                              borderTopRightRadius: "25%",
-                              cursor: "pointer",
-                              borderLeft: "none",
-                              backgroundColor: "#EEEEEE",
-                            }}
-                          >
-                            {showPassword ? (
-                              <Eye size={16} />
-                            ) : (
-                              <EyeOff size={16} />
-                            )}
-                          </InputGroupText>
-                        </InputGroup>
-                        <ErrorMessage name="password">
-                          {(msg) => (
-                            <div className="error" style={{ color: "red" }}>
-                              {msg}
-                            </div>
-                          )}
-                        </ErrorMessage>
-                      </div>
-                      <div className="mb-2">
-                        <InputGroup>
-                          <InputGroupText
-                            style={{
-                              borderRight: "none",
-                              backgroundColor: "#EEEEEE",
-                              borderBottomLeftRadius: "25%",
-                              borderTopLeftRadius: "25%",
-                            }}
-                          >
-                            <Lock size={14} />
-                          </InputGroupText>
-                          <Field
-                            name="confirmPassword"
-                            as={Input}
-                            autoComplete="off"
-                            className="input-group-merge"
-                            id="login-confirmPassword"
-                            placeholder="Confirm Password"
-                            type={showConfirmPassword ? "text" : "password"}
-                            style={{
-                              paddingLeft: "0px",
-                              paddingRight: "0px",
-                              borderLeft: "none",
-                              borderRight: "none",
-                              backgroundColor: "#EEEEEE",
-                            }}
-                          />
-                          <InputGroupText
-                            onClick={() =>
-                              setShowConfirmPassword(!showConfirmPassword)
-                            }
-                            style={{
-                              borderBottomRightRadius: "25%",
-                              borderTopRightRadius: "25%",
-                              cursor: "pointer",
-                              borderLeft: "none",
-                              backgroundColor: "#EEEEEE",
-                            }}
-                          >
-                            {showConfirmPassword ? (
-                              <Eye size={16} />
-                            ) : (
-                              <EyeOff size={16} />
-                            )}
-                          </InputGroupText>
-                        </InputGroup>
-                        <ErrorMessage name="confirmPassword">
-                          {(msg) => (
-                            <div className="error" style={{ color: "red" }}>
-                              {msg}
-                            </div>
-                          )}
-                        </ErrorMessage>
-                      </div>
-                      <div className="error" style={{ color: "red" }}>
-                        {error}
-                      </div>
-                      <Button
-                        color="primary"
-                        type="submit"
-                        disabled={isSubmitting}
-                        style={{
-                          borderRadius: "35px",
-                          marginBottom: "10%",
-                          zIndex: "1000",
-                        }}
-                        block
+                <CardTitle tag="h2" className="fw-bold text-center">
+                  <p
+                    style={{
+                      fontSize: "25px",
+                      fontFamily: "Montserrat",
+                      color: "#161616",
+                      fontWeight: "bold",
+                    }}
+                  >
+                    {t("Reset Password")}
+                  </p>
+                </CardTitle>
+                <CardText className="text-center">
+                  <p
+                    style={{
+                      fontSize: "14px",
+                      fontFamily: "Montserrat",
+                      color: "#7D7D7D",
+                      fontWeight: "600",
+                    }}
+                  >
+                    {t("Create a strong password")}
+                  </p>
+                </CardText>
+                <Formik
+                  initialValues={{ password: "", confirmPassword: "" }}
+                  validate={(values) => {
+                    const passwordRegex =
+                      /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&]).{8,}$/;
+                    const errors = {};
+                    if (!values.password) {
+                      errors.password = t("Password is required");
+                    } else if (!passwordRegex.test(values.password)) {
+                      errors.password =
+                        "Password must contain at least 8 characters, one uppercase letter, one lowercase letter, one number, and one special character";
+                    }
+                    if (!values.confirmPassword) {
+                      errors.confirmPassword = t(
+                        "Confirm Password is required"
+                      );
+                    } else if (values.password !== values.confirmPassword) {
+                      errors.confirmPassword = t("Passwords do not match");
+                    }
+                    return errors;
+                  }}
+                  onSubmit={async (values, { setSubmitting }) => {
+                    try {
+                      const postData = {
+                        email,
+                        password: values.password,
+                      };
+                      const apiData = await post(
+                        "auth/reset-password/",
+                        postData
+                      );
+                      if (!apiData.success) {
+                        setError(apiData.message);
+                        setSubmitting(false);
+                      } else {
+                        setSubmitting(false);
+                        notification(
+                          t("Password reset successfully"),
+                          "success"
+                        );
+                      }
+                    } catch (error) {
+                      setSubmitting(false);
+                    }
+                  }}
+                >
+                  {({ isSubmitting }) => (
+                    <>
+                      <Link
+                        className="brand-logo"
+                        to="/"
+                        onClick={(e) => e.preventDefault()}
+                      ></Link>
+                      <Form
+                        className="auth-login-form mt-0"
+                        style={{ width: "100%", padding: "0 50px" }}
                       >
-                        {isSubmitting ? (
-                          <Spinner size="sm"></Spinner>
-                        ) : (
-                          t("Reset Password")
-                        )}
-                      </Button>
-                    </Form>
-                  </>
-                )}
-              </Formik>
+                        <div className="mb-2">
+                          <InputGroup>
+                            <InputGroupText
+                              style={{
+                                borderRight: "none",
+                                backgroundColor: "#EEEEEE",
+                                borderBottomLeftRadius: "25%",
+                                borderTopLeftRadius: "25%",
+                              }}
+                            >
+                              <Lock size={14} />
+                            </InputGroupText>
+                            <Field
+                              name="password"
+                              as={Input}
+                              autoComplete="off"
+                              className="input-group-merge"
+                              id="login-password"
+                              placeholder="Password"
+                              type={showPassword ? "text" : "password"}
+                              style={{
+                                paddingLeft: "0px",
+                                paddingRight: "0px",
+                                borderLeft: "none",
+                                borderRight: "none",
+                                backgroundColor: "#EEEEEE",
+                              }}
+                            />
+                            <InputGroupText
+                              onClick={() => setShowPassword(!showPassword)}
+                              style={{
+                                borderBottomRightRadius: "25%",
+                                borderTopRightRadius: "25%",
+                                cursor: "pointer",
+                                borderLeft: "none",
+                                backgroundColor: "#EEEEEE",
+                              }}
+                            >
+                              {showPassword ? (
+                                <Eye size={16} />
+                              ) : (
+                                <EyeOff size={16} />
+                              )}
+                            </InputGroupText>
+                          </InputGroup>
+                          <ErrorMessage name="password">
+                            {(msg) => (
+                              <div className="error" style={{ color: "red" }}>
+                                {msg}
+                              </div>
+                            )}
+                          </ErrorMessage>
+                        </div>
+                        <div className="mb-2">
+                          <InputGroup>
+                            <InputGroupText
+                              style={{
+                                borderRight: "none",
+                                backgroundColor: "#EEEEEE",
+                                borderBottomLeftRadius: "25%",
+                                borderTopLeftRadius: "25%",
+                              }}
+                            >
+                              <Lock size={14} />
+                            </InputGroupText>
+                            <Field
+                              name="confirmPassword"
+                              as={Input}
+                              autoComplete="off"
+                              className="input-group-merge"
+                              id="login-confirmPassword"
+                              placeholder="Confirm Password"
+                              type={showConfirmPassword ? "text" : "password"}
+                              style={{
+                                paddingLeft: "0px",
+                                paddingRight: "0px",
+                                borderLeft: "none",
+                                borderRight: "none",
+                                backgroundColor: "#EEEEEE",
+                              }}
+                            />
+                            <InputGroupText
+                              onClick={() =>
+                                setShowConfirmPassword(!showConfirmPassword)
+                              }
+                              style={{
+                                borderBottomRightRadius: "25%",
+                                borderTopRightRadius: "25%",
+                                cursor: "pointer",
+                                borderLeft: "none",
+                                backgroundColor: "#EEEEEE",
+                              }}
+                            >
+                              {showConfirmPassword ? (
+                                <Eye size={16} />
+                              ) : (
+                                <EyeOff size={16} />
+                              )}
+                            </InputGroupText>
+                          </InputGroup>
+                          <ErrorMessage name="confirmPassword">
+                            {(msg) => (
+                              <div className="error" style={{ color: "red" }}>
+                                {msg}
+                              </div>
+                            )}
+                          </ErrorMessage>
+                        </div>
+                        <div className="error" style={{ color: "red" }}>
+                          {error}
+                        </div>
+                        <Button
+                          color="primary"
+                          type="submit"
+                          disabled={isSubmitting}
+                          style={{
+                            borderRadius: "35px",
+                            marginBottom: "10%",
+                            zIndex: "1000",
+                          }}
+                          block
+                        >
+                          {isSubmitting ? (
+                            <Spinner size="sm"></Spinner>
+                          ) : (
+                            t("Reset Password")
+                          )}
+                        </Button>
+                      </Form>
+                    </>
+                  )}
+                </Formik>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-      {/* <div
+        {/* <div
         className="d-none d-lg-flex align-items-center justify-content-center"
         style={{ flex: 1 }}
       >
@@ -352,7 +405,8 @@ const ResetPassword = () => {
           }}
         />
       </div> */}
-    </div>
+      </div>
+    </>
   );
 };
 

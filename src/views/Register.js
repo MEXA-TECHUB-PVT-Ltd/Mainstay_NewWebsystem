@@ -34,6 +34,10 @@ import {
   ModalBody,
   ModalFooter,
   Spinner,
+  UncontrolledDropdown,
+  DropdownToggle,
+  DropdownMenu,
+  DropdownItem,
 } from "reactstrap";
 import logo from "@assets/images/logo/logo.png";
 import "react-toastify/ReactToastify.min.css";
@@ -52,6 +56,10 @@ import { getMessaging, getToken, onMessage } from "firebase/messaging";
 import { clippingParents } from "@popperjs/core";
 import banner from "../@core/assets/images/banner/bannerauth.png";
 import { useTranslation } from "react-i18next";
+import { useDispatch, useSelector } from "react-redux";
+import ReactCountryFlag from "react-country-flag";
+import i18next from "i18next";
+import { setLanguage } from "../redux/languageSlice";
 
 let FCMToken;
 
@@ -79,6 +87,8 @@ const Register = () => {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [userState, setUserState] = useState();
   const [coordinates, setCoordinates] = useState({});
+  const { lng } = useSelector((state) => state.languageSlice);
+  const dispatch = useDispatch();
 
   const queryParams = new URLSearchParams(location.search);
   const user = queryParams.get("user");
@@ -159,8 +169,46 @@ const Register = () => {
     }
     return errors;
   };
+
+  const changeLanguage = (lng) => {
+    i18next.changeLanguage(lng);
+    dispatch(setLanguage(lng));
+  };
+
   return (
     <>
+      <div className="d-flex w-100 justify-content-end mt-1">
+        <UncontrolledDropdown>
+          <DropdownToggle
+            caret
+            color="primary"
+            className="d-flex align-items-center border border-1 text-dark"
+          >
+            <ReactCountryFlag
+              countryCode={lng === "en" ? "US" : "DE"}
+              svg
+              style={{ marginRight: "8px" }}
+            />
+            {lng === "en" ? "English" : "German"}
+          </DropdownToggle>
+          <DropdownMenu>
+            <DropdownItem
+              onClick={() => changeLanguage("en")}
+              active={lng === "en"}
+              className="text-center w-100"
+            >
+              English
+            </DropdownItem>
+            <DropdownItem
+              onClick={() => changeLanguage("ge")}
+              active={lng === "ge"}
+              className="text-center w-100"
+            >
+              German
+            </DropdownItem>
+          </DropdownMenu>
+        </UncontrolledDropdown>
+      </div>
       <div
         className="auth-wrapper auth-cover"
         style={{ overflow: "hidden", display: "flex", height: "100vh" }}

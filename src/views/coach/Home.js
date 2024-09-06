@@ -261,7 +261,7 @@ const Home = () => {
                                   borderRadius: "8px",
                                 }}
                               >
-                                {item?.session_info?.session_details?.status}
+                                {t(item?.session_info?.session_details?.status)}
                               </p>
                             </div>
                           </div>

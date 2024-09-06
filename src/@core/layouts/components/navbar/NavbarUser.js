@@ -67,7 +67,7 @@ const NavbarUser = () => {
             alignItems: "center",
             justifyContent: "center", // Center text horizontally
             width: "70px",
-            margin: "0 25px", // Increase spacing on both sides
+            margin: "0 20px", // Increase spacing on both sides
           }}
         >
           <img
