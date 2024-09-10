@@ -109,7 +109,13 @@ const Register = () => {
           });
         },
         (error) => {
-          console.error("Error retrieving location", error);
+          if (error.code === error.PERMISSION_DENIED) {
+            alert(
+              "Location permission denied. Please enable location access in your browser settings."
+            );
+
+            console.error("Error retrieving location", error);
+          }
         }
       );
     }
@@ -149,7 +155,8 @@ const Register = () => {
   };
   const validateForm = (values) => {
     const passwordRegex =
-      /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&]).{8,}$/;
+      /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?`~]).{8,}$/;
+
     const errors = {};
     if (!values.email) {
       errors.email = t("Email is Required");
@@ -159,8 +166,9 @@ const Register = () => {
     if (!values.password) {
       errors.password = t("Password is Required");
     } else if (!passwordRegex.test(values.password)) {
-      errors.password =
-        "Password must contain at least 8 characters, one uppercase letter, one lowercase letter, one number, and one special character";
+      errors.password = t(
+        "Password must contain at least 8 characters, one uppercase letter, one lowercase letter, one number, and one special character"
+      );
     }
     if (!values.confirmPassword) {
       errors.confirmPassword = t("Confirm Password is Required");

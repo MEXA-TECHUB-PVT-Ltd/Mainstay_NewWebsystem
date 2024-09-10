@@ -105,7 +105,13 @@ const Login = () => {
           });
         },
         (error) => {
-          console.error("Error retrieving location", error);
+          if (error.code === error.PERMISSION_DENIED) {
+            alert(
+              "Location permission denied. Please enable location access in your browser settings."
+            );
+
+            console.error("Error retrieving location", error);
+          }
         }
       );
     }
