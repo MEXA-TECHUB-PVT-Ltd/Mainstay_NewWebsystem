@@ -2,14 +2,14 @@ import { Button, Card, CardBody } from "reactstrap";
 import UpdateProfile from "../modals/UpdateProfile";
 import { useState } from "react";
 import moment from "moment";
-import { t } from "i18next";
+import { useTranslation } from "react-i18next";
 
 const ProfileSection = ({ user, refetch }) => {
+  const { t } = useTranslation();
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const toggleModal = () => [setIsModalOpen(!isModalOpen)];
 
-  console.log(user);
   return (
     <>
       <Card style={{ display: "flex", flexDirection: "column" }}>

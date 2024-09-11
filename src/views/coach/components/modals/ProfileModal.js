@@ -31,9 +31,9 @@ const ProfileModal = ({ isModalOpen, toggleModal, user, refetch }) => {
   const handleSubmit = async (values, { setSubmitting }) => {
     try {
       const postData = {
-        first_name: values.first_name,
-        last_name: values.last_name,
-        about: values.about,
+        first_name: values?.first_name,
+        last_name: values?.last_name,
+        about: values?.about,
         role: "coach",
       };
       const apiData = await updateProfile(postData);
@@ -68,8 +68,7 @@ const ProfileModal = ({ isModalOpen, toggleModal, user, refetch }) => {
     <Modal isOpen={isModalOpen} toggle={toggleModal}>
       <ModalHeader toggle={toggleModal}>
         <h4 style={{ fontWeight: "bold", color: "#0F6D6A" }}>
-          {" "}
-          {t("Update Profile")}{" "}
+          {t("Update Profile")}
         </h4>
       </ModalHeader>
 

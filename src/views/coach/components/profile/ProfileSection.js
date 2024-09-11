@@ -14,8 +14,6 @@ const CoachProfileSection = ({ user, refetch }) => {
     transition: "max-height 0.5s ease",
   });
 
-  console.log("user", user?.about);
-
   const toggleModal = () => setIsModalOpen(!isModalOpen);
 
   const toggleText = () => {

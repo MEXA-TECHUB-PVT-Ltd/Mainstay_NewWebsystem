@@ -15,7 +15,6 @@ import {
   InputGroup,
   InputGroupText,
 } from "reactstrap";
-import { get } from "../urls/api";
 import ReactPaginate from "react-paginate";
 import { useNavigate } from "react-router-dom";
 import Loader from "../utility/Loader";

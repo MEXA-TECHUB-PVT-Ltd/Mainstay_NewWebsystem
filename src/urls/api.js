@@ -3,10 +3,15 @@ import axios from "axios";
 // * LOCAL SERVER
 // export const SOCKET_URL = "http://localhost:5019/";
 // export const BASE_URL = "http://localhost:5019/api/";
+export const SOCKET_URL = "https://mainstays-be-new.caprover-demo.mtechub.com/";
+export const BASE_URL =
+  "https://mainstays-be-new.caprover-demo.mtechub.com/api/";
 
 // * HOSTED SERVER
-export const SOCKET_URL = "https://mainstays-be.mtechub.com/";
-export const BASE_URL = "https://mainstays-be.mtechub.com/api/";
+// export const SOCKET_URL = "https://mainstays-be.mtechub.com/";
+// export const BASE_URL = "https://mainstays-be.mtechub.com/api/";
+// export const SOCKET_URL = "https://backend.mainstays.ch/";
+// export const BASE_URL = "https://backend.mainstays.ch/api/";
 // const BASE_URL = 'https://reqsign-be.mtechub.com/'; // Your API base URL
 export const SDK = "SNmy_l4VZQ";
 export const sdkSECRET = "fQaxd36AZdZPvhJii3wYHzIB36YQsh7MUDrY";

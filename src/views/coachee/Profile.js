@@ -3,10 +3,9 @@ import { useSkin } from "@hooks/useSkin";
 import { Link, useNavigate } from "react-router-dom";
 
 // ** Icons Imports
-import { Facebook, Twitter, Mail, GitHub, ChevronLeft } from "react-feather";
+import { ChevronLeft } from "react-feather";
 
 // ** Custom Components
-import InputPasswordToggle from "@components/input-password-toggle";
 import Avatar from "@components/avatar";
 import defaultAvatar from "@src/assets/images/portrait/small/avatar-s-11.jpg";
 import moment from "moment";
@@ -16,12 +15,10 @@ import {
   Col,
   CardTitle,
   CardText,
-  // Form,
   Label,
   Input,
   Button,
   InputGroup,
-  InputGroupText,
   Spinner,
 } from "reactstrap";
 import PhoneInput from "react-phone-input-2";
