@@ -1,16 +1,14 @@
 import { useEffect, useState } from "react";
-import { Card, CardBody, Button, Container, Row, Col } from "reactstrap";
+import { Card, CardBody, Button } from "reactstrap";
 import Avatar from "@components/avatar";
 import { format } from "date-fns";
 
 import defaultAvatar from "@src/assets/images/portrait/small/avatar-s-11.jpg";
-import ReactPaginate from "react-paginate";
 import { useNavigate } from "react-router-dom";
-import { authGet, get } from "../../urls/api";
-import { Calendar, File, MessageCircle, Star } from "react-feather";
+import { authGet } from "../../urls/api";
+import { Calendar, File } from "react-feather";
 import SessionResponse from "../../utility/SessionResponse";
 import Loader from "../../utility/Loader";
-import { weekdays } from "moment";
 
 import "./video.css";
 
@@ -21,10 +19,11 @@ import { useTranslation } from "react-i18next";
 const Home = () => {
   const navigate = useNavigate();
 
+  // new code
+
   const { t } = useTranslation();
   const [requested, setRequested] = useState([]);
   const [coming, setComing] = useState([]);
-  const [value, setValue] = useState();
   const [selectedRequest, setSelectedRequest] = useState();
   const [requestModal, setRequestModal] = useState(false);
   const [acceptedSessionError, setAcceptedSessionError] = useState("");

@@ -82,7 +82,7 @@ const ProfileForm = ({ user, onSubmit, onFileChange, error }) => {
               cols={60}
               maxLength={250}
               onChange={(e) => {
-                setDescriptionLength(e.target.value.length); // Update character count
+                setDescriptionLength(e?.target?.value?.length); // Update character count
                 setFieldValue("about", e.target.value); // Update formik state
               }}
             />
