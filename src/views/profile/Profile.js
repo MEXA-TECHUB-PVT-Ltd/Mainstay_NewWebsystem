@@ -5,9 +5,6 @@ import { Link, useNavigate } from "react-router-dom";
 // ** Icons Imports
 import { Facebook, Twitter, Mail, GitHub, ChevronLeft } from "react-feather";
 
-// ** Custom Components
-import InputPasswordToggle from "@components/input-password-toggle";
-
 // ** Reactstrap Imports
 import {
   Row,
@@ -22,7 +19,6 @@ import {
   InputGroupText,
   Spinner,
 } from "reactstrap";
-import logo from "@assets/images/logo/logo.png";
 
 // ** Illustrations Imports
 import illustrationsLight from "@src/assets/images/pages/login-v2.svg";

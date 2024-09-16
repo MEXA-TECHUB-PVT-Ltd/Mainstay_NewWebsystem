@@ -21,11 +21,8 @@ import {
   InputGroup,
   Spinner,
 } from "reactstrap";
-import PhoneInput from "react-phone-input-2";
+import PhoneInput from "react-phone-number-input";
 
-// ** Illustrations Imports
-import illustrationsLight from "@src/assets/images/pages/login-v2.svg";
-import illustrationsDark from "@src/assets/images/pages/login-v2-dark.svg";
 import { Formik, Field, ErrorMessage, Form } from "formik";
 // ** Styles
 import "@styles/react/pages/page-authentication.scss";
@@ -33,6 +30,7 @@ import { useEffect, useState } from "react";
 import { get, imgPut, put } from "../../urls/api";
 import SelectField from "../../utility/SelectField";
 import { useTranslation } from "react-i18next";
+import { Outline } from "react-pdf";
 
 const Profile = () => {
   const { t } = useTranslation();
@@ -70,7 +68,6 @@ const Profile = () => {
   };
   const [error, setError] = useState("");
 
-  const source = skin === "dark" ? illustrationsDark : illustrationsLight;
   useEffect(() => {
     get("country/get-all").then((res) => {
       console.log("Countries", res);
@@ -152,7 +149,7 @@ const Profile = () => {
                   user_type: "coachee",
                 }}
                 validate={(values) => {
-                  // console.log(values);
+                  console.log(values);
                   const errors = {};
                   if (!values.first_name) {
                     errors.first_name = t("First name is required");
@@ -320,20 +317,25 @@ const Profile = () => {
                         <Field name="phone">
                           {({ field, form }) => (
                             <PhoneInput
-                              country={"de"} // Set default country
+                              defaultCountry="DE" // Set default country
                               value={field.value}
                               onChange={(phone) =>
                                 form.setFieldValue(field.name, phone)
                               }
-                              inputStyle={{
-                                backgroundColor: "#EEEEEE",
-                                borderRadius: "8px",
-                                width: "100%",
-                                height: "calc(1.5em + .75rem + 2px)", // match other input styles
-                              }}
-                              inputProps={{
-                                name: "phone",
-                                required: true,
+                              international
+                              numberInputProps={{
+                                inputMode: "numeric",
+                                autoComplete: "tel",
+                                maxLength: "15",
+                                style: {
+                                  backgroundColor: "#EEEEEE",
+                                  borderRadius: "8px",
+                                  width: "100%",
+                                  height: "calc(1.5em +.75rem + 1px)",
+                                  padding: "9px",
+                                  border: ".5px solid #ccc",
+                                  outline: "none",
+                                },
                               }}
                             />
                           )}

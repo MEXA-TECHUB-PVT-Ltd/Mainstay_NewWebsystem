@@ -80,6 +80,7 @@ const CoacheeVerification = () => {
         setLoading(false);
         if (signUp === "true" && role === "coachee") {
           navigate(`/coachee-profile`);
+          // navigate(`/coachee-profile`);
         } else {
           navigate(`/reset-password?email=${email}&role=${role}`);
         }

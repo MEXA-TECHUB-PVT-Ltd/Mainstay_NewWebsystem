@@ -10,8 +10,7 @@ import {
 } from "reactstrap";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
-import PhoneInput from "react-phone-input-2";
-import "react-phone-input-2/lib/style.css";
+import PhoneInput from "react-phone-number-input";
 import { Camera } from "react-feather";
 
 // Custom imports
@@ -179,22 +178,32 @@ const UpdateProfile = ({ isModalOpen, toggleModal, user, refetch }) => {
                 className="text-danger"
               />
 
-              <PhoneInput
-                country={"de"} // Default country set to Germany
-                value={user?.phone || ""}
-                onChange={(phone) => setFieldValue("phone", phone)}
-                inputProps={{
-                  name: "phone",
-                  required: true,
-                  autoFocus: true,
-                }}
-                containerClass="mb-1"
-              />
-              <ErrorMessage
-                name="phone"
-                component="div"
-                className="text-danger"
-              />
+              <div className="my-2">
+                <PhoneInput
+                  value={user?.phone || ""}
+                  onChange={(phone) => setFieldValue("phone", phone)}
+                  international
+                  numberInputProps={{
+                    inputMode: "numeric",
+                    autoComplete: "tel",
+                    maxLength: "15",
+                    style: {
+                      backgroundColor: "#EEEEEE",
+                      borderRadius: "8px",
+                      width: "100%",
+                      height: "calc(1.5em +.75rem + 1px)",
+                      padding: "9px",
+                      border: ".5px solid #ccc",
+                      outline: "none",
+                    },
+                  }}
+                />
+                <ErrorMessage
+                  name="phone"
+                  component="div"
+                  className="text-danger"
+                />
+              </div>
 
               <Field
                 name="country_id"

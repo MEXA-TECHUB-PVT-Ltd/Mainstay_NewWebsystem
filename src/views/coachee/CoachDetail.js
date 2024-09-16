@@ -446,8 +446,6 @@ const CoachDetail = () => {
     // handleEndSession();
   };
 
-  console.log(data?.user?.badges?.name, "data");
-
   return (
     <>
       <div className="mb-5">
@@ -505,22 +503,23 @@ const CoachDetail = () => {
                       objectFit: "cover", // Maintain aspect ratio and cover the container
                     }}
                   /> */}
-                  {data?.user?.badges?.name !== "NULL" && (
-                    <img
-                      src={getBadgeImage(data?.user?.badges?.name)}
-                      alt="Badge"
-                      style={{
-                        position: "absolute",
-                        right: "-10px",
-                        bottom: "0px",
-                        width: "30px",
-                        height: "30px",
-                        borderRadius: "50%",
-                        background: "transparent",
-                        boxShadow: "unset",
-                      }}
-                    />
-                  )}
+                  {data?.user?.badges?.name !== "NULL" &&
+                    data?.user?.badges?.name !== undefined && (
+                      <img
+                        src={getBadgeImage(data?.user?.badges?.name)}
+                        alt="Badge"
+                        style={{
+                          position: "absolute",
+                          right: "-10px",
+                          bottom: "0px",
+                          width: "30px",
+                          height: "30px",
+                          borderRadius: "50%",
+                          background: "transparent",
+                          boxShadow: "unset",
+                        }}
+                      />
+                    )}
                 </div>
                 <div style={{ marginLeft: "12px" }}>
                   <h2

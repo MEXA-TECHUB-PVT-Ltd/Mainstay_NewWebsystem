@@ -38,7 +38,7 @@ import "./@core/assets/fonts/feather/iconfont.css";
 import "./@core/scss/core.scss";
 import "./assets/scss/style.scss";
 import "react-toastify/dist/ReactToastify.min.css";
-import "react-phone-input-2/lib/style.css";
+import "react-phone-number-input/style.css";
 
 // ** Service Worker
 import * as serviceWorker from "./serviceWorker";
@@ -61,7 +61,6 @@ const container = document.getElementById("root");
 const root = createRoot(container);
 
 {
-  // initialization
   i18n.use(initReactI18next).init({
     resources: {
       ge: { translation: geTranslation },
@@ -89,8 +88,3 @@ root.render(
     </Provider>
   </BrowserRouter>
 );
-
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
-// serviceWorker.unregister();
