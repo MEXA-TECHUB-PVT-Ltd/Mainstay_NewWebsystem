@@ -125,7 +125,7 @@ const FirstScreen = () => {
               }}
             >
               {t(
-                "Empower or embrace growth? Choose your path: Coach to lead or Coachee to learn. Your journey, your role"
+                "Increase your well-being! Let experienced coaches accompany you, find new ways to achieve inner balance and achieve your personal goals - for less stress, better health and more joy in life. Start now!"
               )}
             </p>
           </CardText>
@@ -181,7 +181,7 @@ const FirstScreen = () => {
                           color: select === 2 ? "#0F6D6A" : "",
                         }}
                       >
-                        Coachee
+                        {t("Coachee")}
                       </CardText>
                       <div
                         style={{

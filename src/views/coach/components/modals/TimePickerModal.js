@@ -9,6 +9,7 @@ import {
   ModalHeader,
 } from "reactstrap";
 import CustomTimeInput from "../../../../utility/CustomTimePicker";
+import { useTranslation } from "react-i18next";
 
 const TimePickerModal = ({
   modalOpen,
@@ -23,21 +24,23 @@ const TimePickerModal = ({
   timeError,
   setModalOpen,
 }) => {
+  const { t } = useTranslation();
+
   return (
     <>
       <Modal isOpen={modalOpen} toggle={() => setModalOpen(false)}>
         <ModalHeader toggle={() => setModalOpen(false)}>
-          Select Time
+          {t("Select Time")}
         </ModalHeader>
         <ModalBody>
           <CustomTimeInput
-            label="Start Time:"
+            label={t("Start Time:")}
             value={startTime}
             onChange={setStartTime}
             timeError={timeError}
           />
           <CustomTimeInput
-            label="End Time:"
+            label={t("End Time:")}
             value={endTime}
             onChange={setEndTime}
             timeError={timeError}
@@ -49,7 +52,7 @@ const TimePickerModal = ({
             className="justify-content-center"
             onClick={addAvailability}
           >
-            Save Time
+            {t("Save Time")}
           </Button>
         </ModalFooter>
       </Modal>

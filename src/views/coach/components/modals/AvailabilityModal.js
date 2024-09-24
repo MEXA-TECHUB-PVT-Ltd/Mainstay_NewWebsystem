@@ -116,10 +116,10 @@ const AvailabilityModal = ({
 
   const addAvailability = () => {
     if (!startTime) {
-      setTimeError({ start: "Start Time is required" });
+      setTimeError({ start: t("Start Time is required") });
     }
     if (!endTime) {
-      setTimeError({ end: "End Time is required" });
+      setTimeError({ end: t("End Time is required") });
     }
 
     const startTime24 = moment(startTime, "hh:mm A").format("HH:mm");
@@ -237,7 +237,7 @@ const AvailabilityModal = ({
                         color: item.enabled ? "#1E1E1E" : "#A1A1A1",
                       }}
                     >
-                      {day}
+                      {t(day)}
                     </Label>
                   </div>
                   <div>
@@ -276,9 +276,9 @@ const AvailabilityModal = ({
                             }}
                             onClick={() => toggleModal(day, index)}
                           >
-                            {moment(row?.start, "HH:mm:ss").format("h:mm A") +
+                            {moment(row?.start, "HH:mm:ss").format("HH:mm") +
                               "-" +
-                              moment(row?.end, "HH:mm:ss").format("h:mm A")}
+                              moment(row?.end, "HH:mm:ss").format("HH:mm")}
                           </Badge>
 
                           <XCircle

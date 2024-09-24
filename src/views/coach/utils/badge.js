@@ -69,44 +69,44 @@ export const renderStars = (rating) => {
 export const badges = [
   {
     title: "Bronze",
-    criteria: t("5 reviews min. 4 stars"),
+    criteria: "5 reviews min. 4 stars",
     requiredBadge: "Bronze",
   },
   {
     title: "Silver",
-    criteria: t("15 reviews min. 4 stars"),
+    criteria: "15 reviews min. 4 stars",
     requiredBadge: "Silver",
   },
   {
     title: "Gold",
-    criteria: t("25 reviews min. 4 stars"),
+    criteria: "25 reviews min. 4 stars",
     requiredBadge: "Gold",
   },
   {
     title: "Platinum",
-    criteria: t("50 reviews min. 4 stars"),
+    criteria: "50 reviews min. 4 stars",
     requiredBadge: "Platinum",
   },
 ];
 export const coacheeBadges = [
   {
     title: "Bronze",
-    criteria: t("After 30 Wellcoins"),
+    criteria: "After 30 Wellcoins",
     requiredBadge: "Bronze",
   },
   {
     title: "Silver",
-    criteria: t("After 60 Wellcoins"),
+    criteria: "After 60 Wellcoins",
     requiredBadge: "Silver",
   },
   {
     title: "Gold",
-    criteria: t("After 100 Wellcoins"),
+    criteria: "After 100 Wellcoins",
     requiredBadge: "Gold",
   },
   {
     title: "Platinum",
-    criteria: t("After 300 Wellcoins"),
+    criteria: "After 300 Wellcoins",
     requiredBadge: "Platinum",
   },
 ];

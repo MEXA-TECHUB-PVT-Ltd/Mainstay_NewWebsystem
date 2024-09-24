@@ -39,8 +39,8 @@ const BadgesComponent = ({ userBadge }) => {
               alt={badge.title + " Badge"}
               width="80"
             />
-            <h2>{badge.title}</h2>
-            <p>{badge.criteria}</p>
+            <h2>{t(badge.title)}</h2>
+            <p>{t(badge.criteria)}</p>
           </div>
         ))}
       </div>

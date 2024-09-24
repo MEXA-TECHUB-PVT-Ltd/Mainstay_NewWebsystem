@@ -149,7 +149,7 @@ const CoachProfile = () => {
                       style={{ flex: 2, textAlign: "right" }}
                     >
                       {moment(transaction?.created_at).format(
-                        "MMMM Do YYYY, h:mm:ss a"
+                        "MMMM Do YYYY, HH:mm:ss"
                       ) || t("Date Unknown")}
                     </div>
                   </div>

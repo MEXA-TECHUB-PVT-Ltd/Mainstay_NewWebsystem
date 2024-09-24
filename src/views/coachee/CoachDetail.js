@@ -367,7 +367,7 @@ const CoachDetail = () => {
   };
 
   function convertTo12Hour(timeString) {
-    return moment(timeString, "HH:mm").format("hh:mm A");
+    return moment(timeString, "HH:mm").format("HH:mm");
   }
 
   const getStartTimes = () => {
@@ -696,7 +696,7 @@ const CoachDetail = () => {
                       sessionData?.session?.session_data?.session_details
                         ?.section,
                       "HH:mm"
-                    ).format("HH:mm A")}
+                    ).format("HH:mm")}
                   </span>
                 </div>
                 <div className="mb-1">

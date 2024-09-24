@@ -169,14 +169,14 @@ const Notifications = () => {
         case "SESSION_REQUEST":
           return (
             <span>
-              {t("You have a session request from")}
+              {t("You have a session request from ")}
               <span style={nameStyle}>{item.coachee_full_name}</span>.
             </span>
           );
         case "SESSION_REVIEW":
           return (
             <span>
-              {t(" New review received from")}
+              {t(" New review received from ")}
               <span style={nameStyle}>{item.coachee_full_name}</span>.{" "}
               {t("Check it out now!")}
             </span>
@@ -184,7 +184,7 @@ const Notifications = () => {
         case "SESSION_STARTED":
           return (
             <span>
-              {t("Your session with")}
+              {t("Your session with ")}
               <span style={nameStyle}>{item.coachee_full_name}</span>{" "}
               {t("is about to start")}
             </span>
@@ -192,7 +192,7 @@ const Notifications = () => {
         case "PAYMENT_SUCCESSFUL":
           return (
             <span>
-              {t("Payment received for session with")}
+              {t("Payment received for session with ")}
               <span style={nameStyle}>{item.coachee_full_name}</span>.
             </span>
           );
@@ -206,21 +206,21 @@ const Notifications = () => {
         case "SESSION_REQUEST":
           return (
             <span>
-              {t("Your session request has been sent to")}
+              {t("Your session request has been sent to ")}
               <span style={nameStyle}>{item.coach_full_name}</span>.
             </span>
           );
         case "SESSION_ENDED":
           return (
             <span>
-              {t("Kindly rate your session with")}
+              {t("Kindly rate your session with ")}
               <span style={nameStyle}>{item.coach_full_name}</span>.
             </span>
           );
         case "SESSION_STARTED":
           return (
             <span>
-              {t("Your session with")}
+              {t("Your session with ")}
               <span style={nameStyle}>{item.coach_full_name}</span>{" "}
               {t("has started.")}
             </span>
@@ -228,14 +228,14 @@ const Notifications = () => {
         case "PAYMENT_SUCCESSFUL":
           return (
             <span>
-              {t("You have successfully paid for the session with")}
+              {t("You have successfully paid for the session with ")}
               <span style={nameStyle}>{item.coach_full_name}</span>.
             </span>
           );
         case "SESSION_ACCEPTED":
           return (
             <span>
-              {t("Your session has been accepted by")}
+              {t("Your session has been accepted by ")}
               <span style={nameStyle}>{item.coach_full_name}</span>.
             </span>
           );

@@ -108,7 +108,9 @@ const App = () => {
 
         if (badgeName) {
           toast.success(
-            `${t("Congratulation You have received new Badge.")} ${badgeName}`
+            `${t("Congratulation You have received new Badge.")} ${t(
+              badgeName
+            )}`
           );
         }
       }

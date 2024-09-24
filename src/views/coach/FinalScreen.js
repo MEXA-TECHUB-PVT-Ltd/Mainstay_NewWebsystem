@@ -2,8 +2,10 @@ import React, { useEffect, useState } from "react";
 import LoadingCircle from "../../utility/LoadingCircle";
 import { useSearchParams } from "react-router-dom";
 import { authGet, authPost, put } from "../../urls/api";
+import { useTranslation } from "react-i18next";
 
 const FinalScreen = () => {
+  const { t } = useTranslation();
   const [searchParams, setSearchParams] = useSearchParams();
   const [show, setShow] = useState(false);
   const [isVerificationCompleted, setIsVerificationCompleted] = useState(false);
@@ -106,15 +108,15 @@ const FinalScreen = () => {
                 className="text-center"
                 style={{ color: "#FFFFFF", fontSize: "30px", width: "50%" }}
               >
-                Generating Your Profile{" "}
+                {t("Generating Your Profile")}
               </h2>
               <p
                 className="text-center"
                 style={{ color: "#FFFFFF", width: "60%" }}
               >
-                Our mission is to empower your coaching journey: Connect with
-                extraordinary individuals who will inspire and guide you to
-                unleash your full coaching potential.
+                {t(
+                  "Our mission is to empower your coaching journey: Connect with extraordinary individuals who will inspire and guide you to unleash your full coaching potential."
+                )}
               </p>
             </div>
           </>

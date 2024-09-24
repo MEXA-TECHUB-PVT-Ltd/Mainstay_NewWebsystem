@@ -57,7 +57,7 @@ const ReviewsComponent = ({ reviewsData, style }) => {
                     <div>{renderStars(parseInt(review.rating))}</div>
                   </div>
                   <div style={{ marginLeft: "auto" }}>
-                    {moment(review.created_at).format("DD/MM/YYYY HH:mm A")}
+                    {moment(review.created_at).format("DD/MM/YYYY HH:mm")}
                   </div>
                 </div>
                 <p style={{ marginBottom: "0", marginTop: "10px" }}>
