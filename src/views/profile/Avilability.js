@@ -143,10 +143,10 @@ const Availability = () => {
     console.log(startTime);
     if (!startTime) {
       // console.log("Required");
-      setTimeError({ start: "Start Time is required" });
+      setTimeError({ start: t("Start Time is required") });
     }
     if (!endTime) {
-      setTimeError({ end: "Start Time is required" });
+      setTimeError({ end: t("End Time is required") });
     }
     let startTime24 = moment(startTime, "hh:mm A").format("HH:mm");
     let endTime24 = moment(endTime, "hh:mm A").format("HH:mm");
@@ -302,6 +302,7 @@ const Availability = () => {
                   {availability &&
                     Object.keys(availability).map((day) => {
                       const item = availability[day];
+
                       console.log("ITEMS: ", item);
                       return (
                         <div
@@ -322,7 +323,7 @@ const Availability = () => {
                                 color: item.enabled ? "#1E1E1E" : "#A1A1A1",
                               }}
                             >
-                              {day}
+                              {t(day)}
                             </Label>
                           </div>
                           <div>
@@ -366,11 +367,11 @@ const Availability = () => {
                                       onClick={() => toggleModal(day, index)} // Open modal for editing
                                     >
                                       {moment(row?.start, "HH:mm:ss").format(
-                                        "h:mm A"
+                                        "HH:mm"
                                       ) +
                                         "-" +
                                         moment(row?.end, "HH:mm:ss").format(
-                                          "h:mm A"
+                                          "HH:mm"
                                         )}
                                     </Badge>
 

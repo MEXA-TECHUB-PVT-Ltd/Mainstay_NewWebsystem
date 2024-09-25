@@ -10,16 +10,15 @@ function CustomTimeInput({ label, value, onChange, timeError }) {
   const initialTimeParts = initialValueParts[0].split(":");
   const initialHour = initialTimeParts[0] || "00";
   const initialMinute = initialTimeParts[1] || "00";
-    const initialPeriod = initialValueParts[1] || "PM";
-    
+  const initialPeriod = initialValueParts[1] || "PM";
 
-  const hours = Array.from({ length: 12 }, (_, i) =>
+  const hours = Array.from({ length: 24 }, (_, i) =>
     (i + 1).toString().padStart(2, "0")
   );
   const minutes = Array.from({ length: 12 }, (_, i) =>
     (i * 5).toString().padStart(2, "0")
   );
-  const periods = ["AM", "PM"];
+  // const periods = ["AM", "PM"];
 
   const [selectedHour, setSelectedHour] = useState(initialHour);
   const [selectedMinute, setSelectedMinute] = useState(initialMinute);
@@ -38,23 +37,25 @@ function CustomTimeInput({ label, value, onChange, timeError }) {
     };
   }, []);
 
-const handleTimeSelect = (hour, minute, period) => {
-  const newHour = hour !== null ? hour : selectedHour; // Keep current hour unless a new one is provided
-  const newMinute = minute !== null ? minute : selectedMinute; // Keep current minute unless a new one is provided
-  const newPeriod = period !== null ? period : selectedPeriod; // Keep current period unless a new one is provided
-  setSelectedHour(newHour);
-  setSelectedMinute(newMinute);
-  setSelectedPeriod(newPeriod);
-  onChange(`${newHour}:${newMinute} ${newPeriod}`);
-};
+  const handleTimeSelect = (hour, minute, period) => {
+    const newHour = hour !== null ? hour : selectedHour; // Keep current hour unless a new one is provided
 
+    const newMinute = minute !== null ? minute : selectedMinute || "0o0"; // Keep current minute unless a new one is provided
+    // const newPeriod = period !== null ? period : selectedPeriod; // Keep current period unless a new one is provided
+    setSelectedHour(newHour);
+    if (parseInt(newHour) !== 24) {
+      setSelectedMinute(newMinute);
+    }
+    // setSelectedPeriod(newPeriod);
+    onChange(`${newHour}:${newMinute}`);
+  };
 
   return (
     <div ref={refContainer} className="custom-time-picker-custom">
       <label>{label}</label>
       <input
         type="text"
-        value={`${selectedHour}:${selectedMinute} ${selectedPeriod}`}
+        value={`${selectedHour}:${selectedMinute}`}
         readOnly
         onFocus={() => setIsOpen(true)}
         placeholder="Select time"
@@ -88,7 +89,7 @@ const handleTimeSelect = (hour, minute, period) => {
               </div>
             ))}
           </div>
-          <div className="time-select-custom">
+          {/* <div className="time-select-custom">
             {periods.map((p) => (
               <div
                 key={p}
@@ -100,7 +101,7 @@ const handleTimeSelect = (hour, minute, period) => {
                 {p}
               </div>
             ))}
-          </div>
+          </div> */}
         </div>
       )}
       {timeError?.start && (

@@ -71,7 +71,7 @@ const UpdateProfile = ({ isModalOpen, toggleModal, user, refetch }) => {
       await updateProfileImage(formData);
       setLoading(false);
     } catch (err) {
-      console.log(err);
+      console.log(err.message);
       setLoading(false);
       setError("An error occurred while uploading the file.");
     }
@@ -209,7 +209,7 @@ const UpdateProfile = ({ isModalOpen, toggleModal, user, refetch }) => {
                 name="country_id"
                 as={SelectField}
                 options={options}
-                placeholder="Country"
+                placeholder={t("Select")}
                 className="mb-1"
               />
 

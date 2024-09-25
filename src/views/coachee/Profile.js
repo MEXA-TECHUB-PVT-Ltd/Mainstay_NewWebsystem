@@ -354,6 +354,7 @@ const Profile = () => {
                         <Field
                           name="country_id"
                           as={SelectField}
+                          placeholder={t("Select") + "..."}
                           className="input-group-merge"
                           id="country_id"
                           type="select"
