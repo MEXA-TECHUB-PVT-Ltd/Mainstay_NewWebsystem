@@ -3,10 +3,12 @@ import IOSToggleButton from "../../../../utility/IOSToggleButton";
 import Interest from "../modals/Interest";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
+import { useSelector } from "react-redux";
 
 const AreaOfInterest = ({ interests, refetch }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { t } = useTranslation();
+  const { lng } = useSelector((state) => state.languageSlice);
 
   const toggleModal = () => [setIsModalOpen(!isModalOpen)];
   return (
@@ -34,7 +36,9 @@ const AreaOfInterest = ({ interests, refetch }) => {
             <div className="col">
               {interests?.map((row, index) => (
                 <div key={index}>
-                  <h6 className="my-1">{row}</h6>
+                  <h6 className="my-1">
+                    {lng === "ge" ? row.german_name : row.name}
+                  </h6>
                 </div>
               ))}
             </div>

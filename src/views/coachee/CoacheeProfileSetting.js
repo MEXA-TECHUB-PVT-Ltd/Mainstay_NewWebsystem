@@ -9,6 +9,7 @@ import NotificationSettings from "./components/profile/NotificationSettings";
 import ProfileSection from "./components/profile/ProfileSection";
 import AreaOfInterest from "./components/profile/AreaOfInterest";
 import { ToastContainer } from "react-toastify";
+import { useSelector } from "react-redux";
 
 const CoacheeProfileSetting = () => {
   const userData = JSON.parse(localStorage.getItem("loginUserData")) || [];
@@ -18,6 +19,8 @@ const CoacheeProfileSetting = () => {
     user_id: userId,
     role: "coachee",
   });
+
+  console.log(data);
 
   if (isLoading) {
     return <Spinner />;
@@ -31,13 +34,9 @@ const CoacheeProfileSetting = () => {
         </div>
         <div className="col-lg-6 mb-4">
           {/* <NotificationSettings /> */}
-          <AreaOfInterest
-            interests={data?.user?.interests}
-            refetch={refetch}
-          />
+          <AreaOfInterest interests={data?.user?.interests} refetch={refetch} />
         </div>
-        <div className="col-lg-6 mb-4">
-        </div>
+        <div className="col-lg-6 mb-4"></div>
       </div>
       {/* <ToastContainer /> */}
     </div>

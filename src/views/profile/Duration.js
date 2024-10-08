@@ -141,10 +141,6 @@ const Duration = () => {
             }}
           >
             <Col className="px-xl-2 mx-auto " sm="8" md="6" lg="12">
-              <p style={{ fontSize: "12px" }}>
-                {t("19% of amount will be mainstays commission fee")}
-              </p>
-
               <>
                 <Link
                   className="brand-logo"
