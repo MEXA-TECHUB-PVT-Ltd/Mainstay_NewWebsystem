@@ -36,6 +36,7 @@ import { useState, useEffect } from "react";
 import { get, put } from "../../../../urls/api";
 import { toast } from "react-toastify";
 import { useTranslation } from "react-i18next";
+import { useSelector } from "react-redux";
 
 const Interest = ({ isModalOpen, toggleModal, refetch, interests }) => {
   const { t } = useTranslation();
@@ -44,6 +45,7 @@ const Interest = ({ isModalOpen, toggleModal, refetch, interests }) => {
   const [coachingArea, setCoachingArea] = useState([]);
   const [selectedCoachingArea, setSelectedCoachingArea] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
+  const { lng } = useSelector((state) => state.languageSlice);
 
   const [loading, setLoading] = useState(false);
 
@@ -189,7 +191,7 @@ const Interest = ({ isModalOpen, toggleModal, refetch, interests }) => {
                             }}
                           />
                         )}
-                        {item.german_name}
+                        {lng === "ge" ? item.german_name : item?.name}
                       </Label>
                       <Input
                         value={item.id}
